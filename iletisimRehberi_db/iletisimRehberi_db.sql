@@ -1,0 +1,63 @@
+CREATE DATABASE iletisim_Rehberi_db;
+
+USE iletisim_Rehberi_db;
+
+CREATE TABLE KISILER(
+kisi_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+ad VARCHAR(50) NOT NULL,
+telefon_no BIGINT UNIQUE NOT NULL,
+notlar VARCHAR(100),
+email VARCHAR(50) UNIQUE NOT NULL,
+adres VARCHAR(50) UNIQUE NOT NULL,
+kayit_tarihi TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+CREATE TABLE FAVORILER(
+id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+kisi_id INT NOT NULL,
+FOREIGN KEY (kisi_id) REFERENCES KISILER(kisi_id )
+);
+CREATE TABLE ENGELLENENLER(
+id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+kisi_id INT NOT NULL,
+FOREIGN KEY (kisi_id) REFERENCES KISILER(kisi_id),
+telefon_no BIGINT UNIQUE NOT NULL,
+engelleme_tarihi TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+CREATE TABLE SON_ARAMALAR(
+id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+kisi_id INT NOT NULL,
+FOREIGN KEY (kisi_id) REFERENCES KISILER(kisi_id ),
+telefon_no BIGINT NOT NULL,
+sonArama_tarihi TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+CREATE TABLE SESLI_MESAJ(
+id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+kisi_id INT NOT NULL,
+FOREIGN KEY (kisi_id) REFERENCES KISILER(kisi_id ),
+telefon_no BIGINT NOT NULL,
+mesaj_tarihi TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+INSERT INTO KISILER (ad, telefon_no, notlar, email, adres) VALUES
+('Ahmet Yılmaz', 5321001001,'İş Arkadaşı','ahmet@mail.com','Kadıköy, İstanbul');
+INSERT INTO KISILER (ad, telefon_no, notlar, email, adres) VALUES
+('Ayşe Demir', 5332002002,'Lise Arkadaşı','ayse@mail.com','Çankaya, Ankara');
+INSERT INTO KISILER (ad, telefon_no, notlar, email, adres) VALUES
+('Mehmet Kaya', 5423003003, NULL,'mehmet@mail.com','Konak, İzmir');
+INSERT INTO KISILER (ad, telefon_no, notlar, email, adres) VALUES
+('Fatma Çelik', 5554004004,'Spor Salonu','fatma@mail.com','Nilüfer, Bursa');
+INSERT INTO FAVORILER (kisi_id) VALUES (1);
+INSERT INTO FAVORILER (kisi_id) VALUES (2);
+INSERT INTO FAVORILER (kisi_id) VALUES (3);
+INSERT INTO FAVORILER (kisi_id) VALUES (4);
+INSERT INTO ENGELLENENLER (kisi_id, telefon_no) VALUES (1, 5321001001);
+INSERT INTO ENGELLENENLER (kisi_id, telefon_no) VALUES (2, 5992223344);
+INSERT INTO ENGELLENENLER (kisi_id, telefon_no) VALUES (3, 5423003003);
+INSERT INTO ENGELLENENLER (kisi_id, telefon_no) VALUES (4, 5350009988);
+INSERT INTO SON_ARAMALAR (kisi_id, telefon_no) VALUES (1, 5321001001);
+INSERT INTO SON_ARAMALAR (kisi_id, telefon_no) VALUES (2, 5332002002);
+INSERT INTO SON_ARAMALAR (kisi_id, telefon_no) VALUES (1, 5321001001);
+INSERT INTO SONARAMALAR (kisi_id, telefon_no) VALUES (3, 5423003003);
+INSERT INTO SESLI_MESAJ (kisi_id, telefon_no) VALUES (2, 5332002002);
+INSERT INTO SESLI_MESAJ (kisi_id, telefon_no) VALUES (4, 5554004004);
+INSERT INTO SESLI_MESAJ (kisi_id, telefon_no) VALUES (1, 5321001001);
+INSERT INTO SESLI_MESAJ (kisi_id, telefon_no) VALUES (3, 5423003003);
